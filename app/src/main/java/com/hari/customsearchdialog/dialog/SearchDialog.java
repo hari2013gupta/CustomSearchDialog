@@ -48,7 +48,7 @@ public class SearchDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setTitle("Select your state");
+        setTitle("Select your item");
 
         setContentView(R.layout.list_search_dialog);
 
