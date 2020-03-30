@@ -2,7 +2,6 @@ package com.hari.customsearchdialog;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 
 import com.hari.customsearchdialog.dialog.SearchDialog;
@@ -26,20 +25,18 @@ public class MainActivity extends AppCompatActivity {
         activity = this;
         setContentView(R.layout.activity_main);
         spinner_state_name = findViewById(R.id.spinner_state_name);
-        spinner_state_name.setFocusable(false);
-        spinner_state_name.setOnClickListener(view -> {
-            SearchDialog c = new SearchDialog(activity, spinnerList, "Search here", false,
-                    dialogInterface -> {
-                        Log.i(TAG, "===========cancel");
-                    },
-                    position -> {
-                        SpinnerItem item = spinnerList.get(position);
-                        spinner_state_name.setText(item.getCityName());
-                        selectedStateId = item.getCityId();
-                    });
-            c.show();
-        });
+
         addItemInList();
+        SearchDialog c = new SearchDialog(activity, spinnerList, "Search here", false,
+                dialogInterface -> {
+                    Log.i(TAG, "===========cancel");
+                },
+                position -> {
+                    SpinnerItem item = spinnerList.get(position);
+                    spinner_state_name.setText(item.getCityName());
+                    selectedStateId = item.getCityId();
+                });
+        c.show();
     }
 
     private void addItemInList() {
