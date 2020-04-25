@@ -32,7 +32,7 @@ public class SearchDialog extends Dialog {
     boolean can;
 
     public interface OnDialogIntOkClickListener {
-        void onClicked(int position);
+        void onClicked(String id);
     }
     public SearchDialog(@NonNull Activity context, List<SpinnerItem> spinnerList, String searchHint, boolean cancelable, @Nullable OnCancelListener cancelListener, OnDialogIntOkClickListener onDialogIntOkClickListener) {
         super(context, R.style.CustomDialog);
@@ -62,9 +62,9 @@ public class SearchDialog extends Dialog {
         mRecyclerView.setAdapter(spinAdapter);
 
         spinAdapter.notifyDataSetChanged();
-        spinAdapter.setOnItemClickListener((position, v) -> {
+        spinAdapter.setOnItemClickListener((id, v) -> {
             if (onDialogIntOkClickListener != null) {
-                onDialogIntOkClickListener.onClicked(position);
+                onDialogIntOkClickListener.onClicked(id);
             }
             dismiss();
         });

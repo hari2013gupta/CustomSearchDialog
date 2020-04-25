@@ -2,6 +2,7 @@ package com.hari.customsearchdialog;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 
 import com.hari.customsearchdialog.dialog.SearchDialog;
@@ -16,25 +17,34 @@ public class MainActivity extends AppCompatActivity {
     final String TAG = MainActivity.class.getSimpleName();
     AppCompatActivity activity;
     List<SpinnerItem> spinnerList = new ArrayList<>();
-    String selectedStateId;
-    EditText spinner_state_name;
+    String selectedId;
+    EditText spinner1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = this;
         setContentView(R.layout.activity_main);
-        spinner_state_name = findViewById(R.id.spinner_state_name);
+        spinner1 = findViewById(R.id.spinner1);
+        spinner1.setFocusable(false);
 
         addItemInList();
+        openDialog(null);
+        spinner1.setOnClickListener(v -> openDialog(v));
+    }
+
+    private void openDialog(View v) {
         SearchDialog c = new SearchDialog(activity, spinnerList, "Search here", false,
                 dialogInterface -> {
                     Log.i(TAG, "===========cancel");
                 },
-                position -> {
-                    SpinnerItem item = spinnerList.get(position);
-                    spinner_state_name.setText(item.getCityName());
-                    selectedStateId = item.getCityId();
+                id -> {
+                    for (SpinnerItem item : spinnerList) {
+                        if (item.getCityId().equals(id)) {
+                            spinner1.setText(item.getCityName());
+                            selectedId = item.getCityId();
+                        }
+                    }
                 });
         c.show();
     }
