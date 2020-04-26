@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.hari.customsearchdialog.R;
+import com.hari.customsearchdialog.adapter.CityAdapter;
+import com.hari.customsearchdialog.model.CityItem;
 import com.hari.customsearchdialog.util.MyDividerItemDecoration;
 
 import java.util.List;
@@ -22,24 +24,24 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class SearchDialog extends Dialog {
-    String TAG = SearchDialog.class.getCanonicalName();
+public class CitySearchDialog extends Dialog {
+    String TAG = CitySearchDialog.class.getCanonicalName();
     OnDialogIntOkClickListener onDialogIntOkClickListener;
     OnCancelListener onCancelListener;
     Activity activity;
-    List<SpinnerItem> spinnerList;
+    List<CityItem> cityList;
     String hintString;
     boolean can;
 
     public interface OnDialogIntOkClickListener {
         void onClicked(String id);
     }
-    public SearchDialog(@NonNull Activity context, List<SpinnerItem> spinnerList, String searchHint, boolean cancelable, @Nullable OnCancelListener cancelListener, OnDialogIntOkClickListener onDialogIntOkClickListener) {
+    public CitySearchDialog(@NonNull Activity context, List<CityItem> cityList, String searchHint, boolean cancelable, @Nullable OnCancelListener cancelListener, OnDialogIntOkClickListener onDialogIntOkClickListener) {
         super(context, R.style.CustomDialog);
         this.onDialogIntOkClickListener = onDialogIntOkClickListener;
         this.onCancelListener = cancelListener;
         this.activity = context;
-        this.spinnerList = spinnerList;
+        this.cityList = cityList;
         this.hintString = searchHint;
         this.can = cancelable;
     }
@@ -48,21 +50,21 @@ public class SearchDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setTitle("Select your item");
+        setTitle("Select your city");
 
-        setContentView(R.layout.list_search_dialog);
+        setContentView(R.layout.dialog_city_search);
 
         RecyclerView mRecyclerView = findViewById(R.id.recyclerDialog);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.addItemDecoration(new MyDividerItemDecoration(activity, DividerItemDecoration.VERTICAL, 36));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        SpinAdapter spinAdapter = new SpinAdapter(activity, spinnerList);
+        CityAdapter cityAdapter = new CityAdapter(activity, cityList);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setAdapter(spinAdapter);
+        mRecyclerView.setAdapter(cityAdapter);
 
-        spinAdapter.notifyDataSetChanged();
-        spinAdapter.setOnItemClickListener((id, v) -> {
+        cityAdapter.notifyDataSetChanged();
+        cityAdapter.setOnItemClickListener((id, v) -> {
             if (onDialogIntOkClickListener != null) {
                 onDialogIntOkClickListener.onClicked(id);
             }
@@ -79,7 +81,7 @@ public class SearchDialog extends Dialog {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                spinAdapter.getFilter().filter(charSequence);
+                cityAdapter.getFilter().filter(charSequence);
             }
 
             @Override

@@ -5,8 +5,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.hari.customsearchdialog.dialog.SearchDialog;
-import com.hari.customsearchdialog.dialog.SpinnerItem;
+import com.hari.customsearchdialog.dialog.CitySearchDialog;
+import com.hari.customsearchdialog.model.CityItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,33 +16,33 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
     final String TAG = MainActivity.class.getSimpleName();
     AppCompatActivity activity;
-    List<SpinnerItem> spinnerList = new ArrayList<>();
-    String selectedId;
-    EditText spinner1;
+    List<CityItem> cityList = new ArrayList<>();
+    String selectedCityId;
+    EditText cityET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = this;
         setContentView(R.layout.activity_main);
-        spinner1 = findViewById(R.id.spinner1);
-        spinner1.setFocusable(false);
+        cityET = findViewById(R.id.cityET);
+        cityET.setFocusable(false);
 
         addItemInList();
         openDialog(null);
-        spinner1.setOnClickListener(v -> openDialog(v));
+        cityET.setOnClickListener(v -> openDialog(v));
     }
 
     private void openDialog(View v) {
-        SearchDialog c = new SearchDialog(activity, spinnerList, "Search here", false,
+        CitySearchDialog c = new CitySearchDialog(activity, cityList, "Search here", false,
                 dialogInterface -> {
                     Log.i(TAG, "===========cancel");
                 },
                 id -> {
-                    for (SpinnerItem item : spinnerList) {
+                    for (CityItem item : cityList) {
                         if (item.getCityId().equals(id)) {
-                            spinner1.setText(item.getCityName());
-                            selectedId = item.getCityId();
+                            cityET.setText(item.getCityName());
+                            selectedCityId = item.getCityId();
                         }
                     }
                 });
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addItemInList() {
         for (int i = 0; i < 100; i++) {
-            spinnerList.add(new SpinnerItem("id" + i, "item" + i));
+            cityList.add(new CityItem("id " + i, "City " + i));
         }
     }
 }

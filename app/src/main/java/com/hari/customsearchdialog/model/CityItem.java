@@ -1,14 +1,14 @@
-package com.hari.customsearchdialog.dialog;
+package com.hari.customsearchdialog.model;
 
-public class SpinnerItem {
+public class CityItem {
 
     String cityId;
     String cityName;
 
-    public SpinnerItem() {
+    public CityItem() {
     }
 
-    public SpinnerItem(String cityId, String cityName) {
+    public CityItem(String cityId, String cityName) {
         this.cityId = cityId;
         this.cityName = cityName;
     }

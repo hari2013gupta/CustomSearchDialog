@@ -1,4 +1,4 @@
-package com.hari.customsearchdialog.dialog;
+package com.hari.customsearchdialog.adapter;
 
 import android.app.Activity;
 import android.content.res.Resources;
@@ -10,21 +10,22 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.hari.customsearchdialog.R;
+import com.hari.customsearchdialog.model.CityItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-public class SpinAdapter extends RecyclerView.Adapter<SpinAdapter.DataObjectHolder> implements Filterable {
-    private static String TAG = SpinAdapter.class.getSimpleName();
+public class CityAdapter extends RecyclerView.Adapter<CityAdapter.DataObjectHolder> implements Filterable {
+    private static String TAG = CityAdapter.class.getSimpleName();
     private static MyClickListener myClickListener;
-    public List<SpinnerItem> spinnerList;
+    public List<CityItem> spinnerList;
     public Activity activity;
-    static private List<SpinnerItem> spinListFiltered;
+    static private List<CityItem> spinListFiltered;
     private ItemFilter mFilter = new ItemFilter();
 
-    public SpinAdapter(Activity activity, List<SpinnerItem> spinnerList) {
+    public CityAdapter(Activity activity, List<CityItem> spinnerList) {
         this.activity = activity;
         this.spinnerList = spinnerList;
         this.spinListFiltered = spinnerList;
@@ -38,7 +39,7 @@ public class SpinAdapter extends RecyclerView.Adapter<SpinAdapter.DataObjectHold
     public DataObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         DataObjectHolder dataObjectHolder = null;
         try {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_spinner_item, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_city_item, parent, false);
 
             dataObjectHolder = new DataObjectHolder(view);
         } catch (Exception ex) {
@@ -50,7 +51,7 @@ public class SpinAdapter extends RecyclerView.Adapter<SpinAdapter.DataObjectHold
     @Override
     public void onBindViewHolder(final DataObjectHolder holder, final int position) {
         try {
-            SpinnerItem item = spinListFiltered.get(position);
+            CityItem item = spinListFiltered.get(position);
             holder.nameTV.setText(item.getCityName());
         } catch (Resources.NotFoundException e) {
             e.printStackTrace();
@@ -62,7 +63,7 @@ public class SpinAdapter extends RecyclerView.Adapter<SpinAdapter.DataObjectHold
         return mFilter;
     }
 
-    public void addItem(SpinnerItem dataObj, int index) {
+    public void addItem(CityItem dataObj, int index) {
         spinnerList.add(index, dataObj);
         notifyItemInserted(index);
     }
@@ -104,8 +105,8 @@ public class SpinAdapter extends RecyclerView.Adapter<SpinAdapter.DataObjectHold
             if (charString.isEmpty()) {
                 spinListFiltered = spinnerList;
             } else {
-                List<SpinnerItem> filteredList = new ArrayList<>();
-                for (SpinnerItem row : spinnerList) {
+                List<CityItem> filteredList = new ArrayList<>();
+                for (CityItem row : spinnerList) {
 
                     // here we are looking for name  match
                     if (row.getCityName().toLowerCase().contains(charString.toLowerCase())) {
@@ -122,7 +123,7 @@ public class SpinAdapter extends RecyclerView.Adapter<SpinAdapter.DataObjectHold
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            spinListFiltered = (ArrayList<SpinnerItem>) filterResults.values;
+            spinListFiltered = (ArrayList<CityItem>) filterResults.values;
             notifyDataSetChanged();
         }
     }
